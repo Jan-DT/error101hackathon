@@ -37,13 +37,13 @@ while True:
     elif keyboard.read_key() == 'x':
         print("Stop")
         sendKey(b'x')
-    elif keyboard.read_key() == 'z':
-        manualEnabled = not(manualEnabled)
-        print(f"Manual {manualEnabled}")
-        if manualEnabled:
-            sendKey(b'y')
-        else:
-            sendKey(b'n')
+    elif keyboard.read_key() == 'q':
+        print("Manual ON")
+        sendKey(b'y')
+        sendKey(b'x')
+    elif keyboard.read_key() == 'e':
+        print("Manual OFF")
+        sendKey(b'n')
     time.sleep(0.01)
 
     # if keyboard.is_pressed("q"):
