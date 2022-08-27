@@ -43,31 +43,32 @@ void MotorSpeed (char key)
  {
    case 'w':
 //     Serial.println("Moving forward");
-     if manualEnabled {
+     if (manualEnabled) {
        MoveForward(DEF_MAX_SPEED);
        break;
      }
    case 's':
 //     Serial.println("Moving backward");
-     if manualEnabled {
+     if (manualEnabled) {
        MoveBackward(DEF_MAX_SPEED);
        break;
      }
    case 'a':
 //     Serial.println("Turning left");
-     if manualEnabled {
+     if (manualEnabled) {
        TurnLeft(DEF_MAX_SPEED);
        break;
      }
    case 'd':
 //     Serial.println("Turning right");
-     if manualEnabled {
+     if (manualEnabled) {
        TurnRight(DEF_MAX_SPEED);
        break;
      }
    case 'z':
+     String manualText;
      manualEnabled = not(manualEnabled);
-     if manualEnabled {String manualText = "ENABLED"} else {String manualText = "DISABLED"}
+     if (manualEnabled) {manualText = "ENABLED";} else {manualText = "DISABLED";}
      Serial.println("MANUAL " + manualText);
    default:
 //     Serial.println("Invalid char was received");

@@ -1,4 +1,4 @@
-/*
+/* 
    Please do not change the pin numbers, feel free to change the name of the constants!
 */
 
@@ -22,6 +22,8 @@
 #define MOTOR_CODE_REVERSE  0b0011
 #define MOTOR_CODE_LEFT     0b0110
 #define MOTOR_CODE_RIGHT    0b1001
+
+extern bool manualEnabled;
 
 /*
    This function runs once and we have already implemented everything needed
@@ -86,8 +88,8 @@ void loop (){
     if (RIGHT_READ == 1) {RIGHT_READ_STR = "T";} else {RIGHT_READ_STR = "F";};
     String sit = LEFT_READ_STR + RIGHT_READ_STR;
     Serial.println(sit);  
-
-
+  
+  
     //Forward (Black)
     if (sit=="TT") {
       analogWrite(PIN_REVERSE_LEFT,0);
@@ -95,14 +97,14 @@ void loop (){
       analogWrite(PIN_FORWARD_LEFT,200);
       analogWrite(PIN_FORWARD_RIGHT,200);
     }
-    //Right (White Black
+    //Right
     else if (sit=="FT") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_FORWARD_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,200);
       analogWrite(PIN_REVERSE_RIGHT,20);
     }
-    //Left (Black White)
+    //Left
     else if (sit=="TF") {
       analogWrite(PIN_REVERSE_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,0);
@@ -113,8 +115,8 @@ void loop (){
     else if (sit=="FF") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_REVERSE_RIGHT,0);
-      analogWrite(PIN_FORWARD_LEFT,70);
-      analogWrite(PIN_FORWARD_RIGHT,220);
+      analogWrite(PIN_FORWARD_LEFT,220);
+      analogWrite(PIN_FORWARD_RIGHT,70);
     }
     digitalWrite(13, LOW);
     //  CommunicationCheck();
