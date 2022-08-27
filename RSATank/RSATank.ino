@@ -86,8 +86,8 @@ void loop (){
     if (RIGHT_READ == 1) {RIGHT_READ_STR = "T";} else {RIGHT_READ_STR = "F";};
     String sit = LEFT_READ_STR + RIGHT_READ_STR;
     Serial.println(sit);  
-  
-  
+
+
     //Forward (Black)
     if (sit=="TT") {
       analogWrite(PIN_REVERSE_LEFT,0);
@@ -95,14 +95,14 @@ void loop (){
       analogWrite(PIN_FORWARD_LEFT,200);
       analogWrite(PIN_FORWARD_RIGHT,200);
     }
-    //Right
+    //Right (White Black
     else if (sit=="FT") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_FORWARD_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,200);
       analogWrite(PIN_REVERSE_RIGHT,20);
     }
-    //Left
+    //Left (Black White)
     else if (sit=="TF") {
       analogWrite(PIN_REVERSE_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,0);
@@ -113,8 +113,8 @@ void loop (){
     else if (sit=="FF") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_REVERSE_RIGHT,0);
-      analogWrite(PIN_FORWARD_LEFT,220);
-      analogWrite(PIN_FORWARD_RIGHT,70);
+      analogWrite(PIN_FORWARD_LEFT,70);
+      analogWrite(PIN_FORWARD_RIGHT,220);
     }
     digitalWrite(13, LOW);
     //  CommunicationCheck();
