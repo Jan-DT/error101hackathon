@@ -25,9 +25,9 @@ uint8_t motor_directions[NO_OF_DIRECTIONS];
 /*
  * Function Prototypes
  */
-void StartMotors (void);
-void SetMotors (uint8_t motor_code, uint8_t motor_power);
-bool VerifyPower (String motor_direction, uint8_t motor_power);
+//void StartMotors (void);
+//void SetMotors (uint8_t motor_code, uint8_t motor_power);
+//bool VerifyPower (String motor_direction, uint8_t motor_power);
 
 /*
  * Setting up the pins related to the motors and initiate the array of motor pins responsible for the motor speed.
@@ -135,4 +135,3 @@ bool VerifyPower (String motor_direction, uint8_t motor_power)
   Serial.println("Invalid speed for moving " + motor_direction + ": " + motor_power); // Move to Communication Tab
   return (motor_power < 0 || motor_power > 255);
 }
-
