@@ -13,6 +13,8 @@
 #define PIN_REVERSE_RIGHT 3
 #define PIN_FORWARD_RIGHT 2
 
+#define PIN_LIGHT 13
+
 #define NO_OF_DIRECTIONS 4
 
 #define MOTOR_CODE_RESET    0b0000
@@ -74,46 +76,51 @@ void setup ()
    Put the code here that you want to run repeatedly.
 */
 void loop (){
-  // 0 = white,  1 = black
-  String LEFT_READ_STR;
-  String RIGHT_READ_STR;
-  int LEFT_READ = digitalRead(PIN_OPTICAL_LEFT);
-  int RIGHT_READ = digitalRead(PIN_OPTICAL_RIGHT);
-  if (LEFT_READ == 1) {LEFT_READ_STR = "T";} else {LEFT_READ_STR = "F";};
-  if (RIGHT_READ == 1) {RIGHT_READ_STR = "T";} else {RIGHT_READ_STR = "F";};
-  String sit = LEFT_READ_STR + RIGHT_READ_STR;
-  Serial.println(sit);  
-
-
-  //Forward (Black)
-  if (sit=="TT") {
-    analogWrite(PIN_REVERSE_LEFT,0);
-    analogWrite(PIN_REVERSE_RIGHT,0);
-    analogWrite(PIN_FORWARD_LEFT,200);
-    analogWrite(PIN_FORWARD_RIGHT,200);
+  if (manualEnabled = false) {
+    // 0 = white,  1 = black
+    String LEFT_READ_STR;
+    String RIGHT_READ_STR;
+    int LEFT_READ = digitalRead(PIN_OPTICAL_LEFT);
+    int RIGHT_READ = digitalRead(PIN_OPTICAL_RIGHT);
+    if (LEFT_READ == 1) {LEFT_READ_STR = "T";} else {LEFT_READ_STR = "F";};
+    if (RIGHT_READ == 1) {RIGHT_READ_STR = "T";} else {RIGHT_READ_STR = "F";};
+    String sit = LEFT_READ_STR + RIGHT_READ_STR;
+    Serial.println(sit);  
+  
+  
+    //Forward (Black)
+    if (sit=="TT") {
+      analogWrite(PIN_REVERSE_LEFT,0);
+      analogWrite(PIN_REVERSE_RIGHT,0);
+      analogWrite(PIN_FORWARD_LEFT,200);
+      analogWrite(PIN_FORWARD_RIGHT,200);
+    }
+    //Right
+    else if (sit=="FT") {
+      analogWrite(PIN_REVERSE_LEFT,0);
+      analogWrite(PIN_FORWARD_RIGHT,0);
+      analogWrite(PIN_FORWARD_LEFT,200);
+      analogWrite(PIN_REVERSE_RIGHT,20);
+    }
+    //Left
+    else if (sit=="TF") {
+      analogWrite(PIN_REVERSE_RIGHT,0);
+      analogWrite(PIN_FORWARD_LEFT,0);
+      analogWrite(PIN_FORWARD_RIGHT,200);
+      analogWrite(PIN_REVERSE_LEFT,20);
+    }
+    //Forward (Right) (White)
+    else if (sit=="FF") {
+      analogWrite(PIN_REVERSE_LEFT,0);
+      analogWrite(PIN_REVERSE_RIGHT,0);
+      analogWrite(PIN_FORWARD_LEFT,220);
+      analogWrite(PIN_FORWARD_RIGHT,70);
+    }
+    digitalWrite(13, LOW);
+    //  CommunicationCheck();
+  } else {
+    digitalWrite(13, HIGH);
   }
-  //Right
-  else if (sit=="FT") {
-    analogWrite(PIN_REVERSE_LEFT,0);
-    analogWrite(PIN_FORWARD_RIGHT,0);
-    analogWrite(PIN_FORWARD_LEFT,200);
-    analogWrite(PIN_REVERSE_RIGHT,20);
-  }
-  //Left
-  else if (sit=="TF") {
-    analogWrite(PIN_REVERSE_RIGHT,0);
-    analogWrite(PIN_FORWARD_LEFT,0);
-    analogWrite(PIN_FORWARD_RIGHT,200);
-    analogWrite(PIN_REVERSE_LEFT,20);
-  }
-  //Forward (Right) (White)
-  else if (sit=="FF") {
-    analogWrite(PIN_REVERSE_LEFT,0);
-    analogWrite(PIN_REVERSE_RIGHT,0);
-    analogWrite(PIN_FORWARD_LEFT,220);
-    analogWrite(PIN_FORWARD_RIGHT,70);
-  }
+  CommunicationUpdate();
   delay(50);
-  //  CommunicationUpdate();
-  //  CommunicationCheck();
 }

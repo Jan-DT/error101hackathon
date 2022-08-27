@@ -6,6 +6,8 @@ const uint8_t DEF_MAX_SPEED = 240;
 
 void MotorSpeed (char key);
 
+bool manualEnabled = false;
+
 // Setting up the pins related to the bluetooth module and start the Serial.
 void CommunicationSetup (void)
 {
@@ -41,20 +43,32 @@ void MotorSpeed (char key)
  {
    case 'w':
 //     Serial.println("Moving forward");
-     MoveForward(DEF_MAX_SPEED);
-     break;
+     if manualEnabled {
+       MoveForward(DEF_MAX_SPEED);
+       break;
+     }
    case 's':
 //     Serial.println("Moving backward");
-     MoveBackward(DEF_MAX_SPEED);
-     break;
+     if manualEnabled {
+       MoveBackward(DEF_MAX_SPEED);
+       break;
+     }
    case 'a':
 //     Serial.println("Turning left");
-     TurnLeft(DEF_MAX_SPEED);
-     break;
+     if manualEnabled {
+       TurnLeft(DEF_MAX_SPEED);
+       break;
+     }
    case 'd':
 //     Serial.println("Turning right");
-     TurnRight(DEF_MAX_SPEED);
-     break;
+     if manualEnabled {
+       TurnRight(DEF_MAX_SPEED);
+       break;
+     }
+   case 'z':
+     manualEnabled = not(manualEnabled);
+     if manualEnabled {String manualText = "ENABLED"} else {String manualText = "DISABLED"}
+     Serial.println("MANUAL " + manualText);
    default:
 //     Serial.println("Invalid char was received");
      StopMotors();
