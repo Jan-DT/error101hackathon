@@ -1,6 +1,14 @@
 /*
  * Pins used for the bluetooth communication
  */
+#define PIN_ENABLE_LEFT  24
+#define PIN_REVERSE_LEFT 7
+#define PIN_FORWARD_LEFT 6
+
+#define PIN_ENABLE_RIGHT  25
+#define PIN_REVERSE_RIGHT 3
+#define PIN_FORWARD_RIGHT 2
+
 
 const uint8_t DEF_MAX_SPEED = 240;
 
@@ -44,32 +52,51 @@ void MotorSpeed (char key)
    case 'w':
 //     Serial.println("Moving forward");
      if (manualEnabled) {
-       MoveForward(DEF_MAX_SPEED);
+       analogWrite(PIN_REVERSE_LEFT,0);
+       analogWrite(PIN_REVERSE_RIGHT,0);
+       analogWrite(PIN_FORWARD_LEFT,100);
+       analogWrite(PIN_FORWARD_RIGHT,100);
        break;
      }
    case 's':
 //     Serial.println("Moving backward");
      if (manualEnabled) {
-       MoveBackward(DEF_MAX_SPEED);
+       analogWrite(PIN_FORWARD_LEFT,0);
+       analogWrite(PIN_FORWARD_RIGHT,0);
+       analogWrite(PIN_REVERSE_LEFT,100);
+       analogWrite(PIN_REVERSE_RIGHT,100);
        break;
      }
    case 'a':
 //     Serial.println("Turning left");
      if (manualEnabled) {
-       TurnLeft(DEF_MAX_SPEED);
+       analogWrite(PIN_REVERSE_RIGHT,0);
+       analogWrite(PIN_FORWARD_LEFT,0);
+       analogWrite(PIN_REVERSE_LEFT,100);
+       analogWrite(PIN_FORWARD_RIGHT,100);
        break;
      }
    case 'd':
 //     Serial.println("Turning right");
      if (manualEnabled) {
-       TurnRight(DEF_MAX_SPEED);
+       analogWrite(PIN_REVERSE_LEFT,0);
+       analogWrite(PIN_FORWARD_RIGHT,0);
+       analogWrite(PIN_REVERSE_RIGHT,100);
+       analogWrite(PIN_FORWARD_LEFT,100);
        break;
      }
-   case 'z':
-     String manualText;
-     manualEnabled = not(manualEnabled);
-     if (manualEnabled) {manualText = "ENABLED";} else {manualText = "DISABLED";}
-     Serial.println("MANUAL " + manualText);
+   case 'x':
+       analogWrite(PIN_REVERSE_LEFT,0);
+       analogWrite(PIN_FORWARD_RIGHT,0);
+       analogWrite(PIN_REVERSE_RIGHT,0);
+       analogWrite(PIN_FORWARD_LEFT,0);
+       break;
+   case 'y':
+     manualEnabled = true;
+     break;
+   case 'n':
+     manualEnabled = false;
+     break;
    default:
 //     Serial.println("Invalid char was received");
      StopMotors();

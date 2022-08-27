@@ -39,6 +39,7 @@ void setup ()
   OpticalSetup();
   CommunicationSetup();
   Serial.begin(9600);
+  manualEnabled = false;
  
   String LEFT_READ_STR;
   String RIGHT_READ_STR;
@@ -78,7 +79,8 @@ void setup ()
    Put the code here that you want to run repeatedly.
 */
 void loop (){
-  if (manualEnabled = false) {
+  if (manualEnabled == false) {
+    Serial.println("check");
     // 0 = white,  1 = black
     String LEFT_READ_STR;
     String RIGHT_READ_STR;
@@ -89,7 +91,8 @@ void loop (){
     String sit = LEFT_READ_STR + RIGHT_READ_STR;
     Serial.println(sit);  
   
-  
+    SetMotors(MOTOR_CODE_FORWARD,1);
+    SetMotors(MOTOR_CODE_REVERSE,1);
     //Forward (Black)
     if (sit=="TT") {
       analogWrite(PIN_REVERSE_LEFT,0);
@@ -101,28 +104,29 @@ void loop (){
     else if (sit=="FT") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_FORWARD_RIGHT,0);
-      analogWrite(PIN_FORWARD_LEFT,200);
-      analogWrite(PIN_REVERSE_RIGHT,20);
+      analogWrite(PIN_REVERSE_RIGHT,25);
+      analogWrite(PIN_FORWARD_LEFT,160);
     }
     //Left
     else if (sit=="TF") {
       analogWrite(PIN_REVERSE_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,0);
-      analogWrite(PIN_FORWARD_RIGHT,200);
       analogWrite(PIN_REVERSE_LEFT,20);
+      analogWrite(PIN_FORWARD_RIGHT,180);
     }
     //Forward (Right) (White)
     else if (sit=="FF") {
       analogWrite(PIN_REVERSE_LEFT,0);
       analogWrite(PIN_REVERSE_RIGHT,0);
       analogWrite(PIN_FORWARD_LEFT,220);
-      analogWrite(PIN_FORWARD_RIGHT,70);
+      analogWrite(PIN_FORWARD_RIGHT,220);
     }
     digitalWrite(13, LOW);
     //  CommunicationCheck();
   } else {
     digitalWrite(13, HIGH);
   }
+  Serial.println(manualEnabled);
   CommunicationUpdate();
   delay(50);
 }
