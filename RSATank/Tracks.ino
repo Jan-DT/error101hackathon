@@ -22,16 +22,16 @@ void LeftTrack(int power) {
       digitalWrite(PIN_REVERSE_LEFT,0);
       digitalWrite(PIN_FORWARD_LEFT,1);
       SetMotors(MOTOR_CODE_FORWARD,power);
-    };
+    }
     else if (power = 0) {
       digitalWrite(PIN_FORWARD_LEFT,0);
-      digitalWrite(PIN_REVERSE_LEFT,0)
-    };
+      digitalWrite(PIN_REVERSE_LEFT,0);
+    }
     else if (power < 0) {
       digitalWrite(PIN_FORWARD_LEFT,0);
       digitalWrite(PIN_REVERSE_LEFT,1);
       SetMotors(MOTOR_CODE_REVERSE,-1*power);
-    };
+    }
   }
 
 void RightTrack(int power) {
